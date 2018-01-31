@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Web-server</title>
+	<link rel="stylesheet" href="style.css.gz" />
+	<style>
+		.cont-flu {
+			margin-top: 3em;
+		}
+
+		a {
+			text-decoration: none;
+			color: deeppink;
+		}
+	</style>
+</head>
+
+<body>
+	<ul class="nav fix" id="myTopnav">
+		<li><a href="#" class="brand">Web-server</a></li>
+		<li><a href="settings.html">Настройки WiFi</a></li>
+		<li><a href="settingsout.html">Настройки выходов</a></li>
+		<li style="float:right;margin-right:10px;"><a href="#" onclick="logout()">Выход</a></li>
+		<li style="float:right;margin-right:10px;"><a href="http://codedevice.ru" target="_blank">Code Device</a></li>
+		<li class="-icon"><a href="#" onclick="nav()">☰</a></li>
+	</ul>
+	<div id="Modal" class="modal">
+		<div class="m-cont">
+			<span class="close" id="close_m">&times;</span>
+			<div class="m-body">
+				<p>Сохранить настройки?</p>
+			</div>
+			<div class="m-foo">
+				<button id="save_m" class="success">Yes</button>
+				<button id="close" class="danger">No</button>
+			</div>
+		</div>
+	</div>
+	<div class="cont-flu">
+		<div class="row">
+			<div class="xs-12 sm-2 lg-2" style="min-width: 150px;">
+				<h3>More info</h3>
+				<ul>
+					<li><a href="https://github.com/bondrogeen/nodemcu-css" target="_blank">CSS</a></li>
+					<li><a href="https://bondrogeen.github.io/" target="_blank">Example css</a></li>
+					<li><a href="https://github.com/bondrogeen/web-server" target="_blank">Web-server</a></li>
+				</ul>
+			</div>
+			<div class="xs-12 sm-10 lg-9 ">
+				<div class="row">
+					<div class="xs-12">
+						<table>
+							<thead>
+								<tr>
+									<th>ChipID</th>
+									<th>FlashID</th>
+									<th>FS Total</th>
+									<th>FS Used</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr><td><?luareturn(string.format("%x",node.chipid()*256))?></td>
+          <td><?luareturn(string.format("%x",node.flashid()*256))?></td>
+          <td><?lua local x=file.fsinfo() return(x)?></td>
+									<td><?lua local _, x=file.fsinfo() return(x)?></td></tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="xs-3">
+						<span> Память : <?luareturn(node.heap())?></span>
+					</div>
+					<div class="xs-9">
+						<div class="progbar">
+							<div class="bar purple" style="width:<?luareturn(node.heap()*100/45000)?>%">
+								<div class="label">
+									<?luareturn(node.heap()*100/45000)?>%</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<h1>File list</h1>
+				<div class="row">
+					<div class="xs-8">
+						<button class="grey" onclick='document.getElementById("list").style.display = "block"; this.parentElement.style.display="none";'>Open</button>
+					</div>
+				</div>
+				<br>
+				<div id="list" style="display:none;" class="row">
+					<div class="xs-12">
+						<table>
+							<thead>
+								<tr>
+									<th>№</th>
+									<th>Name</th>
+									<th>size</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?lua local n=1 local buf="" for k,v in pairs(file.list()) do buf = buf.."<tr><td>"..n.."</td><td>"..k.."</td><td>"..v.."</td><tr>" n=n+1 end return(buf)?>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		function logout() {
+			document.cookie = "id=";
+			location.href = '/login.html';
+		}
+
+		function nav() {
+			var x = document.getElementById("myTopnav");
+			if (x.classList.contains("res")) {
+				x.classList.remove('res');
+			} else {
+				x.classList.add('res');
+			}
+		}
+	</script>
+</body>
+
+</html>
