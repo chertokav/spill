@@ -34,6 +34,14 @@ local function saveOut(tab)
     return write_to_file(Masks,"Masks.json")
 end
 
+local function saveIn(tab)
+    print("saveIn");
+    InputSet = tab["params"]
+    return write_to_file(InputSet,"params.json")
+end
+
+
+
 local function listap(t)
 local d = {}
 local i = {}
@@ -48,9 +56,12 @@ end
 
 return function (tab)
 local r="false"
+print("tab.init");
 print(tab.init);
+
  if tab.init=="save"then tab.init=nil r=save(tab)
  elseif tab.init=="saveOut" then tab.init=nil r=saveOut(tab)
+ elseif tab.init=="saveIn" then tab.init=nil r=saveIn(tab)
  elseif tab.init=="scan" then wifi.sta.getap(listap) r="true"
  elseif tab.init=="reboot" then
   tmr.create():alarm(2000, tmr.ALARM_SINGLE, function()print("reboot")node.restart()end)

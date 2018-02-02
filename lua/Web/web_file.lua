@@ -12,10 +12,7 @@ local function executeCode (s,p)
  for v in s:gmatch(p) do
   local _,c=pcall(loadstring(v))
   s=s:gsub(p,tostring(c==nil and "" or c),1)
-  
- end 
- --print(s)
- return s
+ end return s
 end
 local function header(c,t,g)
  local s="HTTP/1.0 "..c .."\r\nServer: web-server\r\nContent-Type: "..t.."\r\n"
@@ -78,4 +75,3 @@ return function(conn,filename,args,cookie)
    end  
   all,line,gzip,ftype,buf,data=nil
 end
-

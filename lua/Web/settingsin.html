@@ -1,0 +1,199 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Настройка входов</title><link rel="stylesheet" href="nodemcu-css.min.css" /><style>h1 {}</style></head><body>
+<ul class="nav" id="myTopnav"><li><a href="index.html" >Система</a></li><li><a href="settings.html">Настройки системы</a></li><li><a href="settingsout.html">Настройки выходов</a></li><li><a href="settingsin.html" class="brand">Настройки входов</a></li><li><a href="state.html">Состояние</a></li><li style="float:right;margin-right:10px;"><a href="#" onclick="logout()">Выход</a></li><li class="-icon"><a href="#" onclick="nav()">☰</a></li></ul>
+<div id="Modal" class="modal"><div class="m-cont"><span class="close" id="close_m">&times;</span><div class="m-body"><p>Сохранить настройки и перезагрузить модуль?</p></div><div class="m-foo"><button id="save_m" class="success">Yes</button><button id="close" class="danger">No</button></div></div></div>
+<div class="cont-flu"><div class="row"><div class="xs-12 sm-2 lg-2"><br><span> Память : <?luareturn(node.heap())?></span></div><div class="xs-12 sm-10 lg-9"><h1>Настройка системы: входы</h1><div class="row"><div class="xs-12">
+<table id="tb_settings"><thead><tr><th></th><th>Тип входного сигнала</th><th>Задержка включения</th><th>Задержка выключения</th><th>Триггер</th><th>Полярность</th><th>Показание</th><th>Вес сигнала</th><th>Номер выхода</th><th>Тип обратной связи</th><th>Задержка тревоги</th></thead><tbody>
+<tr id="Tr1"><td>1</td>
+<td><select class="Tp"> <option <?luareturn(InputSet[1][1]==1 and'selected'or'')?> value="1">Сигнал</option><option <?luareturn(InputSet[1][1]==2 and'selected'or'')?> value="2">Счетчик</option>
+<option <?luareturn(InputSet[1][1]==3 and'selected'or'')?> value="3">Обратная связь</option></select></td>
+<td><input class="On" type="text" value=<?luareturn(InputSet[1][2])?>></td>
+<td><input class="Of" type="text" value=<?luareturn(InputSet[1][3])?>></td>
+<td><input class="Tr" type="checkbox" value="8" <?luareturn(InputSet[1][4]==1 and'checked'or'')?>/></td>
+<td><select class="Pol"><option <?luareturn(InputSet[1][5]==1 and'selected'or'')?> value="1">Прямая</option><option <?luareturn(InputSet[1][5]==2 and'selected'or'')?> value="2">Обратная</option></select></td>
+<td><input class="V" type="text" value=<?luareturn(InputSet[1][6])?>></td>
+<td><input class="Vc" type="text" value=<?luareturn(InputSet[1][7])?>></td>
+<td><input class="Outn" type="text" value=<?luareturn(InputSet[1][8])?>></td>
+<td><select class="TOS"><option <?luareturn(InputSet[1][9]==1 and'selected'or'')?> value="1">Открыто</option><option <?luareturn(InputSet[1][9]==2 and'selected'or'')?> value="2">Закрыто</option></select></td>
+<td><input class="AD" type="text" value=<?luareturn(InputSet[1][10])?>></td></tr>
+<tr id="Tr2"><td>2</td>
+<td><select class="Tp"> <option <?luareturn(InputSet[2][1]==1 and'selected'or'')?> value="1">Сигнал</option><option <?luareturn(InputSet[2][1]==2 and'selected'or'')?> value="2">Счетчик</option>
+<option <?luareturn(InputSet[2][1]==3 and'selected'or'')?> value="3">Обратная связь</option></select></td>
+<td><input class="On" type="text" value=<?luareturn(InputSet[2][2])?>></td>
+<td><input class="Of" type="text" value=<?luareturn(InputSet[2][3])?>></td>
+<td><input class="Tr" type="checkbox" value="8" <?luareturn(InputSet[2][4]==1 and'checked'or'')?>/></td>
+<td><select class="Pol"><option <?luareturn(InputSet[2][5]==1 and'selected'or'')?> value="1">Прямая</option><option <?luareturn(InputSet[2][5]==2 and'selected'or'')?> value="2">Обратная</option></select></td>
+<td><input class="V" type="text" value=<?luareturn(InputSet[2][6])?>></td>
+<td><input class="Vc" type="text" value=<?luareturn(InputSet[2][7])?>></td>
+<td><input class="Outn" type="text" value=<?luareturn(InputSet[2][8])?>></td>
+<td><select class="TOS"><option <?luareturn(InputSet[2][9]==1 and'selected'or'')?> value="1">Открыто</option><option <?luareturn(InputSet[2][9]==2 and'selected'or'')?> value="2">Закрыто</option></select></td>
+<td><input class="AD" type="text" value=<?luareturn(InputSet[2][10])?>></td></tr>
+<tr id="Tr3"><td>3</td>
+<td><select class="Tp"> <option <?luareturn(InputSet[3][1]==1 and'selected'or'')?> value="1">Сигнал</option><option <?luareturn(InputSet[3][1]==2 and'selected'or'')?> value="2">Счетчик</option>
+<option <?luareturn(InputSet[3][1]==3 and'selected'or'')?> value="3">Обратная связь</option></select></td>
+<td><input class="On" type="text" value=<?luareturn(InputSet[3][2])?>></td>
+<td><input class="Of" type="text" value=<?luareturn(InputSet[3][3])?>></td>
+<td><input class="Tr" type="checkbox" value="8" <?luareturn(InputSet[3][4]==1 and'checked'or'')?>/></td>
+<td><select class="Pol"><option <?luareturn(InputSet[3][5]==1 and'selected'or'')?> value="1">Прямая</option><option <?luareturn(InputSet[3][5]==2 and'selected'or'')?> value="2">Обратная</option></select></td>
+<td><input class="V" type="text" value=<?luareturn(InputSet[3][6])?>></td>
+<td><input class="Vc" type="text" value=<?luareturn(InputSet[3][7])?>></td>
+<td><input class="Outn" type="text" value=<?luareturn(InputSet[3][8])?>></td>
+<td><select class="TOS"><option <?luareturn(InputSet[3][9]==1 and'selected'or'')?> value="1">Открыто</option><option <?luareturn(InputSet[3][9]==2 and'selected'or'')?> value="2">Закрыто</option></select></td>
+<td><input class="AD" type="text" value=<?luareturn(InputSet[3][10])?>></td></tr>
+<tr id="Tr4"><td>4</td>
+<td><select class="Tp"> <option <?luareturn(InputSet[4][1]==1 and'selected'or'')?> value="1">Сигнал</option><option <?luareturn(InputSet[4][1]==2 and'selected'or'')?> value="2">Счетчик</option>
+<option <?luareturn(InputSet[4][1]==3 and'selected'or'')?> value="3">Обратная связь</option></select></td>
+<td><input class="On" type="text" value=<?luareturn(InputSet[4][2])?>></td>
+<td><input class="Of" type="text" value=<?luareturn(InputSet[4][3])?>></td>
+<td><input class="Tr" type="checkbox" value="8" <?luareturn(InputSet[4][4]==1 and'checked'or'')?>/></td>
+<td><select class="Pol"><option <?luareturn(InputSet[4][5]==1 and'selected'or'')?> value="1">Прямая</option><option <?luareturn(InputSet[4][5]==2 and'selected'or'')?> value="2">Обратная</option></select></td>
+<td><input class="V" type="text" value=<?luareturn(InputSet[4][6])?>></td>
+<td><input class="Vc" type="text" value=<?luareturn(InputSet[4][7])?>></td>
+<td><input class="Outn" type="text" value=<?luareturn(InputSet[4][8])?>></td>
+<td><select class="TOS"><option <?luareturn(InputSet[4][9]==1 and'selected'or'')?> value="1">Открыто</option><option <?luareturn(InputSet[4][9]==2 and'selected'or'')?> value="2">Закрыто</option></select></td>
+<td><input class="AD" type="text" value=<?luareturn(InputSet[4][10])?>></td></tr>
+<tr id="Tr5"><td>5</td>
+<td><select class="Tp"> <option <?luareturn(InputSet[5][1]==1 and'selected'or'')?> value="1">Сигнал</option><option <?luareturn(InputSet[5][1]==2 and'selected'or'')?> value="2">Счетчик</option>
+<option <?luareturn(InputSet[5][1]==3 and'selected'or'')?> value="3">Обратная связь</option></select></td>
+<td><input class="On" type="text" value=<?luareturn(InputSet[5][2])?>></td>
+<td><input class="Of" type="text" value=<?luareturn(InputSet[5][3])?>></td>
+<td><input class="Tr" type="checkbox" value="8" <?luareturn(InputSet[5][4]==1 and'checked'or'')?>/></td>
+<td><select class="Pol"><option <?luareturn(InputSet[5][5]==1 and'selected'or'')?> value="1">Прямая</option><option <?luareturn(InputSet[5][5]==2 and'selected'or'')?> value="2">Обратная</option></select></td>
+<td><input class="V" type="text" value=<?luareturn(InputSet[5][6])?>></td>
+<td><input class="Vc" type="text" value=<?luareturn(InputSet[5][7])?>></td>
+<td><input class="Outn" type="text" value=<?luareturn(InputSet[5][8])?>></td>
+<td><select class="TOS"><option <?luareturn(InputSet[5][9]==1 and'selected'or'')?> value="1">Открыто</option><option <?luareturn(InputSet[5][9]==2 and'selected'or'')?> value="2">Закрыто</option></select></td>
+<td><input class="AD" type="text" value=<?luareturn(InputSet[5][10])?>></td></tr>
+<tr id="Tr6"><td>6</td>
+<td><select class="Tp"> <option <?luareturn(InputSet[6][1]==1 and'selected'or'')?> value="1">Сигнал</option><option <?luareturn(InputSet[6][1]==2 and'selected'or'')?> value="2">Счетчик</option>
+<option <?luareturn(InputSet[6][1]==3 and'selected'or'')?> value="3">Обратная связь</option></select></td>
+<td><input class="On" type="text" value=<?luareturn(InputSet[6][2])?>></td>
+<td><input class="Of" type="text" value=<?luareturn(InputSet[6][3])?>></td>
+<td><input class="Tr" type="checkbox" value="8" <?luareturn(InputSet[6][4]==1 and'checked'or'')?>/></td>
+<td><select class="Pol"><option <?luareturn(InputSet[6][5]==1 and'selected'or'')?> value="1">Прямая</option><option <?luareturn(InputSet[6][5]==2 and'selected'or'')?> value="2">Обратная</option></select></td>
+<td><input class="V" type="text" value=<?luareturn(InputSet[6][6])?>></td>
+<td><input class="Vc" type="text" value=<?luareturn(InputSet[6][7])?>></td>
+<td><input class="Outn" type="text" value=<?luareturn(InputSet[6][8])?>></td>
+<td><select class="TOS"><option <?luareturn(InputSet[6][9]==1 and'selected'or'')?> value="1">Открыто</option><option <?luareturn(InputSet[6][9]==2 and'selected'or'')?> value="2">Закрыто</option></select></td>
+<td><input class="AD" type="text" value=<?luareturn(InputSet[6][10])?>></td></tr>
+<tr id="Tr7"><td>7</td>
+<td><select class="Tp"> <option <?luareturn(InputSet[7][1]==1 and'selected'or'')?> value="1">Сигнал</option><option <?luareturn(InputSet[7][1]==2 and'selected'or'')?> value="2">Счетчик</option>
+<option <?luareturn(InputSet[7][1]==3 and'selected'or'')?> value="3">Обратная связь</option></select></td>
+<td><input class="On" type="text" value=<?luareturn(InputSet[7][2])?>></td>
+<td><input class="Of" type="text" value=<?luareturn(InputSet[7][3])?>></td>
+<td><input class="Tr" type="checkbox" value="8" <?luareturn(InputSet[7][4]==1 and'checked'or'')?>/></td>
+<td><select class="Pol"><option <?luareturn(InputSet[7][5]==1 and'selected'or'')?> value="1">Прямая</option><option <?luareturn(InputSet[7][5]==2 and'selected'or'')?> value="2">Обратная</option></select></td>
+<td><input class="V" type="text" value=<?luareturn(InputSet[7][6])?>></td>
+<td><input class="Vc" type="text" value=<?luareturn(InputSet[7][7])?>></td>
+<td><input class="Outn" type="text" value=<?luareturn(InputSet[7][8])?>></td>
+<td><select class="TOS"><option <?luareturn(InputSet[7][9]==1 and'selected'or'')?> value="1">Открыто</option><option <?luareturn(InputSet[7][9]==2 and'selected'or'')?> value="2">Закрыто</option></select></td>
+<td><input class="AD" type="text" value=<?luareturn(InputSet[7][10])?>></td></tr>
+<tr id="Tr8"><td>8</td>
+<td><select class="Tp"> <option <?luareturn(InputSet[8][1]==1 and'selected'or'')?> value="1">Сигнал</option><option <?luareturn(InputSet[8][1]==2 and'selected'or'')?> value="2">Счетчик</option>
+<option <?luareturn(InputSet[8][1]==3 and'selected'or'')?> value="3">Обратная связь</option></select></td>
+<td><input class="On" type="text" value=<?luareturn(InputSet[8][2])?>></td>
+<td><input class="Of" type="text" value=<?luareturn(InputSet[8][3])?>></td>
+<td><input class="Tr" type="checkbox" value="8" <?luareturn(InputSet[8][4]==1 and'checked'or'')?>/></td>
+<td><select class="Pol"><option <?luareturn(InputSet[8][5]==1 and'selected'or'')?> value="1">Прямая</option><option <?luareturn(InputSet[8][5]==2 and'selected'or'')?> value="2">Обратная</option></select></td>
+<td><input class="V" type="text" value=<?luareturn(InputSet[8][6])?>></td>
+<td><input class="Vc" type="text" value=<?luareturn(InputSet[8][7])?>></td>
+<td><input class="Outn" type="text" value=<?luareturn(InputSet[8][8])?>></td>
+<td><select class="TOS"><option <?luareturn(InputSet[8][9]==1 and'selected'or'')?> value="1">Открыто</option><option <?luareturn(InputSet[8][9]==2 and'selected'or'')?> value="2">Закрыто</option></select></td>
+<td><input class="AD" type="text" value=<?luareturn(InputSet[8][10])?>></td></tr>
+<tr id="Tr9"><td>9</td>
+<td><select class="Tp"> <option <?luareturn(InputSet[9][1]==1 and'selected'or'')?> value="1">Сигнал</option><option <?luareturn(InputSet[9][1]==2 and'selected'or'')?> value="2">Счетчик</option>
+<option <?luareturn(InputSet[9][1]==3 and'selected'or'')?> value="3">Обратная связь</option></select></td>
+<td><input class="On" type="text" value=<?luareturn(InputSet[9][2])?>></td>
+<td><input class="Of" type="text" value=<?luareturn(InputSet[9][3])?>></td>
+<td><input class="Tr" type="checkbox" value="8" <?luareturn(InputSet[9][4]==1 and'checked'or'')?>/></td>
+<td><select class="Pol"><option <?luareturn(InputSet[9][5]==1 and'selected'or'')?> value="1">Прямая</option><option <?luareturn(InputSet[9][5]==2 and'selected'or'')?> value="2">Обратная</option></select></td>
+<td><input class="V" type="text" value=<?luareturn(InputSet[9][6])?>></td>
+<td><input class="Vc" type="text" value=<?luareturn(InputSet[9][7])?>></td>
+<td><input class="Outn" type="text" value=<?luareturn(InputSet[9][8])?>></td>
+<td><select class="TOS"><option <?luareturn(InputSet[9][9]==1 and'selected'or'')?> value="1">Открыто</option><option <?luareturn(InputSet[9][9]==2 and'selected'or'')?> value="2">Закрыто</option></select></td>
+<td><input class="AD" type="text" value=<?luareturn(InputSet[9][10])?>></td></tr>
+<tr id="Tr10"><td>10</td>
+<td><select class="Tp"> <option <?luareturn(InputSet[10][1]==1 and'selected'or'')?> value="1">Сигнал</option><option <?luareturn(InputSet[10][1]==2 and'selected'or'')?> value="2">Счетчик</option>
+<option <?luareturn(InputSet[10][1]==3 and'selected'or'')?> value="3">Обратная связь</option></select></td>
+<td><input class="On" type="text" value=<?luareturn(InputSet[10][2])?>></td>
+<td><input class="Of" type="text" value=<?luareturn(InputSet[10][3])?>></td>
+<td><input class="Tr" type="checkbox" value="8" <?luareturn(InputSet[10][4]==1 and'checked'or'')?>/></td>
+<td><select class="Pol"><option <?luareturn(InputSet[10][5]==1 and'selected'or'')?> value="1">Прямая</option><option <?luareturn(InputSet[10][5]==2 and'selected'or'')?> value="2">Обратная</option></select></td>
+<td><input class="V" type="text" value=<?luareturn(InputSet[10][6])?>></td>
+<td><input class="Vc" type="text" value=<?luareturn(InputSet[10][7])?>></td>
+<td><input class="Outn" type="text" value=<?luareturn(InputSet[10][8])?>></td>
+<td><select class="TOS"><option <?luareturn(InputSet[10][9]==1 and'selected'or'')?> value="1">Открыто</option><option <?luareturn(InputSet[10][9]==2 and'selected'or'')?> value="2">Закрыто</option></select></td>
+<td><input class="AD" type="text" value=<?luareturn(InputSet[10][10])?>></td></tr>
+<tr id="Tr11"><td>11</td>
+<td><select class="Tp"> <option <?luareturn(InputSet[11][1]==1 and'selected'or'')?> value="1">Сигнал</option><option <?luareturn(InputSet[11][1]==2 and'selected'or'')?> value="2">Счетчик</option>
+<option <?luareturn(InputSet[11][1]==3 and'selected'or'')?> value="3">Обратная связь</option></select></td>
+<td><input class="On" type="text" value=<?luareturn(InputSet[11][2])?>></td>
+<td><input class="Of" type="text" value=<?luareturn(InputSet[11][3])?>></td>
+<td><input class="Tr" type="checkbox" value="8" <?luareturn(InputSet[11][4]==1 and'checked'or'')?>/></td>
+<td><select class="Pol"><option <?luareturn(InputSet[11][5]==1 and'selected'or'')?> value="1">Прямая</option><option <?luareturn(InputSet[11][5]==2 and'selected'or'')?> value="2">Обратная</option></select></td>
+<td><input class="V" type="text" value=<?luareturn(InputSet[11][6])?>></td>
+<td><input class="Vc" type="text" value=<?luareturn(InputSet[11][7])?>></td>
+<td><input class="Outn" type="text" value=<?luareturn(InputSet[11][8])?>></td>
+<td><select class="TOS"><option <?luareturn(InputSet[11][9]==1 and'selected'or'')?> value="1">Открыто</option><option <?luareturn(InputSet[11][9]==2 and'selected'or'')?> value="2">Закрыто</option></select></td>
+<td><input class="AD" type="text" value=<?luareturn(InputSet[11][10])?>></td></tr>
+<tr id="Tr12"><td>12</td>
+<td><select class="Tp"> <option <?luareturn(InputSet[12][1]==1 and'selected'or'')?> value="1">Сигнал</option><option <?luareturn(InputSet[12][1]==2 and'selected'or'')?> value="2">Счетчик</option>
+<option <?luareturn(InputSet[12][1]==3 and'selected'or'')?> value="3">Обратная связь</option></select></td>
+<td><input class="On" type="text" value=<?luareturn(InputSet[12][2])?>></td>
+<td><input class="Of" type="text" value=<?luareturn(InputSet[12][3])?>></td>
+<td><input class="Tr" type="checkbox" value="8" <?luareturn(InputSet[12][4]==1 and'checked'or'')?>/></td>
+<td><select class="Pol"><option <?luareturn(InputSet[12][5]==1 and'selected'or'')?> value="1">Прямая</option><option <?luareturn(InputSet[12][5]==2 and'selected'or'')?> value="2">Обратная</option></select></td>
+<td><input class="V" type="text" value=<?luareturn(InputSet[12][6])?>></td>
+<td><input class="Vc" type="text" value=<?luareturn(InputSet[12][7])?>></td>
+<td><input class="Outn" type="text" value=<?luareturn(InputSet[12][8])?>></td>
+<td><select class="TOS"><option <?luareturn(InputSet[12][9]==1 and'selected'or'')?> value="1">Открыто</option><option <?luareturn(InputSet[12][9]==2 and'selected'or'')?> value="2">Закрыто</option></select></td>
+<td><input class="AD" type="text" value=<?luareturn(InputSet[12][10])?>></td></tr>
+<tr id="Tr13"><td>13</td>
+<td><select class="Tp"> <option <?luareturn(InputSet[13][1]==1 and'selected'or'')?> value="1">Сигнал</option><option <?luareturn(InputSet[13][1]==2 and'selected'or'')?> value="2">Счетчик</option>
+<option <?luareturn(InputSet[13][1]==3 and'selected'or'')?> value="3">Обратная связь</option></select></td>
+<td><input class="On" type="text" value=<?luareturn(InputSet[13][2])?>></td>
+<td><input class="Of" type="text" value=<?luareturn(InputSet[13][3])?>></td>
+<td><input class="Tr" type="checkbox" value="8" <?luareturn(InputSet[13][4]==1 and'checked'or'')?>/></td>
+<td><select class="Pol"><option <?luareturn(InputSet[13][5]==1 and'selected'or'')?> value="1">Прямая</option><option <?luareturn(InputSet[13][5]==2 and'selected'or'')?> value="2">Обратная</option></select></td>
+<td><input class="V" type="text" value=<?luareturn(InputSet[13][6])?>></td>
+<td><input class="Vc" type="text" value=<?luareturn(InputSet[13][7])?>></td>
+<td><input class="Outn" type="text" value=<?luareturn(InputSet[13][8])?>></td>
+<td><select class="TOS"><option <?luareturn(InputSet[13][9]==1 and'selected'or'')?> value="1">Открыто</option><option <?luareturn(InputSet[13][9]==2 and'selected'or'')?> value="2">Закрыто</option></select></td>
+<td><input class="AD" type="text" value=<?luareturn(InputSet[13][10])?>></td></tr>
+<tr id="Tr14"><td>14</td>
+<td><select class="Tp"> <option <?luareturn(InputSet[14][1]==1 and'selected'or'')?> value="1">Сигнал</option><option <?luareturn(InputSet[14][1]==2 and'selected'or'')?> value="2">Счетчик</option>
+<option <?luareturn(InputSet[14][1]==3 and'selected'or'')?> value="3">Обратная связь</option></select></td>
+<td><input class="On" type="text" value=<?luareturn(InputSet[14][2])?>></td>
+<td><input class="Of" type="text" value=<?luareturn(InputSet[14][3])?>></td>
+<td><input class="Tr" type="checkbox" value="8" <?luareturn(InputSet[14][4]==1 and'checked'or'')?>/></td>
+<td><select class="Pol"><option <?luareturn(InputSet[14][5]==1 and'selected'or'')?> value="1">Прямая</option><option <?luareturn(InputSet[14][5]==2 and'selected'or'')?> value="2">Обратная</option></select></td>
+<td><input class="V" type="text" value=<?luareturn(InputSet[14][6])?>></td>
+<td><input class="Vc" type="text" value=<?luareturn(InputSet[14][7])?>></td>
+<td><input class="Outn" type="text" value=<?luareturn(InputSet[14][8])?>></td>
+<td><select class="TOS"><option <?luareturn(InputSet[14][9]==1 and'selected'or'')?> value="1">Открыто</option><option <?luareturn(InputSet[14][9]==2 and'selected'or'')?> value="2">Закрыто</option></select></td>
+<td><input class="AD" type="text" value=<?luareturn(InputSet[14][10])?>></td></tr>
+<tr id="Tr15"><td>15</td>
+<td><select class="Tp"> <option <?luareturn(InputSet[15][1]==1 and'selected'or'')?> value="1">Сигнал</option><option <?luareturn(InputSet[15][1]==2 and'selected'or'')?> value="2">Счетчик</option>
+<option <?luareturn(InputSet[15][1]==3 and'selected'or'')?> value="3">Обратная связь</option></select></td>
+<td><input class="On" type="text" value=<?luareturn(InputSet[15][2])?>></td>
+<td><input class="Of" type="text" value=<?luareturn(InputSet[15][3])?>></td>
+<td><input class="Tr" type="checkbox" value="8" <?luareturn(InputSet[15][4]==1 and'checked'or'')?>/></td>
+<td><select class="Pol"><option <?luareturn(InputSet[15][5]==1 and'selected'or'')?> value="1">Прямая</option><option <?luareturn(InputSet[15][5]==2 and'selected'or'')?> value="2">Обратная</option></select></td>
+<td><input class="V" type="text" value=<?luareturn(InputSet[15][6])?>></td>
+<td><input class="Vc" type="text" value=<?luareturn(InputSet[15][7])?>></td>
+<td><input class="Outn" type="text" value=<?luareturn(InputSet[15][8])?>></td>
+<td><select class="TOS"><option <?luareturn(InputSet[15][9]==1 and'selected'or'')?> value="1">Открыто</option><option <?luareturn(InputSet[15][9]==2 and'selected'or'')?> value="2">Закрыто</option></select></td>
+<td><input class="AD" type="text" value=<?luareturn(InputSet[15][10])?>></td></tr>
+<tr id="Tr16"><td>16</td>
+<td><select class="Tp"> <option <?luareturn(InputSet[16][1]==1 and'selected'or'')?> value="1">Сигнал</option><option <?luareturn(InputSet[16][1]==2 and'selected'or'')?> value="2">Счетчик</option>
+<option <?luareturn(InputSet[16][1]==3 and'selected'or'')?> value="3">Обратная связь</option></select></td>
+<td><input class="On" type="text" value=<?luareturn(InputSet[16][2])?>></td>
+<td><input class="Of" type="text" value=<?luareturn(InputSet[16][3])?>></td>
+<td><input class="Tr" type="checkbox" value="8" <?luareturn(InputSet[16][4]==1 and'checked'or'')?>/></td>
+<td><select class="Pol"><option <?luareturn(InputSet[16][5]==1 and'selected'or'')?> value="1">Прямая</option><option <?luareturn(InputSet[16][5]==2 and'selected'or'')?> value="2">Обратная</option></select></td>
+<td><input class="V" type="text" value=<?luareturn(InputSet[16][6])?>></td>
+<td><input class="Vc" type="text" value=<?luareturn(InputSet[16][7])?>></td>
+<td><input class="Outn" type="text" value=<?luareturn(InputSet[16][8])?>></td>
+<td><select class="TOS"><option <?luareturn(InputSet[16][9]==1 and'selected'or'')?> value="1">Открыто</option><option <?luareturn(InputSet[16][9]==2 and'selected'or'')?> value="2">Закрыто</option></select></td>
+<td><input class="AD" type="text" value=<?luareturn(InputSet[16][10])?>></td></tr>
+</tbody></table>
+</div></div><div class="row"><div class="xs-3"><br><button class="info" style="margin-right: 2em;" id="btn_save">Сохранить</button><script src="settingsin.js"></script></div></div></div></div></div></body></html>

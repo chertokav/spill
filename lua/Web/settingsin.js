@@ -1,6 +1,5 @@
 window.onload =
-    function () {
-        
+    function () {        
 
         function send(page, data, callback) {
             var req = new XMLHttpRequest();
@@ -33,30 +32,60 @@ window.onload =
         }
 
         /*поиск значения простого элемента*/
-        function ebi(e) {
+        /*function ebi(e) {
             alert(document.getElementById(e).value);
             return document.getElementById(e).value
+        }
+*/
+        function fsl(t) {
+            for (i = 0; i < t.options.length; i++)
+                if (t.options[i].selected)
+                    return t.options[i].value
         }
 
         function logout() {
             document.cookie = "id=";
             location.href = '/login.html';
         }
+		
+		function makeJsonPart()
+		{
+			var ins = [];
+			var elName;
+			for (var ind = 1; ind <= 16; ind++) {
+				var inElement = [];
+				elName = "Tr" + ind;
+				var s = document.getElementById(elName);
+				inElement.push(parseInt(fsl(s.getElementsByClassName("Tp")[0])));
+				inElement.push(parseInt(s.getElementsByClassName("On")[0].value));
+				inElement.push(parseInt(s.getElementsByClassName("Of")[0].value));
+				inElement.push(parseInt(s.getElementsByClassName("Tr")[0].checked ? 1 : 0));
+				inElement.push(parseInt(fsl(s.getElementsByClassName("Pol")[0])));
+				inElement.push(parseInt(s.getElementsByClassName("V")[0].value));
+				inElement.push(parseInt(s.getElementsByClassName("Vc")[0].value));
+				inElement.push(parseInt(s.getElementsByClassName("Outn")[0].value));
+				inElement.push(parseInt(fsl(s.getElementsByClassName("TOS")[0])));
+				inElement.push(parseInt(s.getElementsByClassName("AD")[0].value));
+				ins.push(inElement);
+            }			
+			return ins;
+		}
+		
         function r() {
-            alert("Сохраняемс");
-            var t = { init: "saveOut"};
-            var mask = [ebi("Output1"), ebi("Output2"), ebi("Output3"), ebi("Output4"), ebi("Output5"), ebi("Output6"), ebi("Output7"), ebi("Output8")];
-            alert("Сохраняем1");
-            t["mask"] = mask;
-            alert("Сохраняем2");
-            /*[ebi("Output1"), ebi("Output2"), ebi("Output3"), ebi("Output4"), ebi("Output5"), ebi("Output6"), ebi("Output7"), ebi("Output8")];*/
-            alert("Скрываем окно");
-            e.style.opacity = "0", setTimeout(
+            var t = { init: "saveIn"};
+			t["params"]=makeJsonPart();
+			e.style.opacity = "0", setTimeout(
                 function () {
                     e.style.display = "none"
                 }, 600), send("web_control.lua", t,
                 function (e) {
-                    alert("Сохранение выполнено.");
+					alert("Сохранение выполнено.");
+					/*var t2 = { init: "saveIn"};
+					t2["params"]=makeJsonPart(16);
+                    send("web_control.lua", t2,
+					function (e) {
+						alert("Сохранение выполнено.");
+					})*/
                 })
         }
 
@@ -68,19 +97,19 @@ window.onload =
                 "myTopnav" == t.target.id ? nav() :
                 "btn_exit" == t.target.id ? logout() :
                 "btn_save" == t.target.id ? (e.style.opacity = "1", e.style.display = "block") :
-                "close_m" == t.target.id | "close" == t.target.id ? (e.style.opacity = "0", setTimeout(
-                    function () { e.style.display = "none" }, 600)) :
-                "save_m" == t.target.id ? r() :
-                ("LI" == t.target.tagName && t.target.id && (document.getElementById("wifi_id").value = t.target.id, document.getElementById("wifi_pass").value = "", document.getElementById("wifi_pass").focus(), document.getElementById("wifi_mode").options[1].selected = "true"), i.style.display = "none")
+                "close_m" == t.target.id | "close" == t.target.id ? (e.style.opacity = "0", setTimeout(function () { e.style.display = "none" }, 600)) :
+                "save_m" == t.target.id ? r() : null;
+                /*("LI" == t.target.tagName && t.target.id && 
+				(document.getElementById("wifi_id").value = t.target.id, document.getElementById("wifi_pass").value = "", 
+				document.getElementById("wifi_pass").focus(), document.getElementById("wifi_mode").options[1].selected = "true"), i.style.display = "none")*/
             })
 
-
+/*
         var ind;
         var elName;
-        for (ind = 1; ind <= 8; ind++) {
+        for (ind = 1; ind <= 16; ind++) {
             elName = "Tr" + ind;
-            var s = document.getElementById(elName)/*, d = s.querySelectorAll('input[type="checkbox"]:not([value]), input[type="checkbox"][value=""]');
-            for (var i = 0; i < d.length; i++) d[i].disabled = true;*/
+            var s = document.getElementById(elName)
             s.onchange = function () {
                 for (ind2 = 1; ind2 <= 8; ind2++) {
                     var elName2 = "Tr" + ind2;
@@ -88,17 +117,8 @@ window.onload =
                     for (var j = 0; j < n.length; j++)
                         n[j].checked ? itog += parseFloat(n[j].value) : itog;
                     document.getElementById("Output" + ind2).innerHTML = itog;
-                    alert("itog " + itog);
                 }
             }
         }
-
-        
-
-        
-
-        
-
-        
-
+*/
     };
