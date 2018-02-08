@@ -46,7 +46,7 @@ local function OnOff(tab)
     else
         Outputs = bit.clear(Outputs, tab["elValue"]);
     end
-    print(Outputs);
+    dofile("SendOut.lua");
 end
 
 local function listap(t)
