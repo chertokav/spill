@@ -967,3 +967,50 @@ tr:hover {
 .footer {
     text-align: center;
 }
+
+.Tr1{
+box-sizing: content-box;
+}
+
+.checkboxEx {display: none;}
+
+.lableEx {
+  position: relative;
+  display: block;
+  width: 90px;
+  height: 10px;
+  padding: 15px;
+  border-radius: 50px;
+  line-height: 10px;
+  color: #31b3ff;
+  text-shadow: 1px 1px 0px rgba(255,255,255,.15);
+  background: rgb(71, 71, 71);
+  box-shadow:
+       0 1px 0 rgba(255,255,255,.2),
+       inset 0 0 0 5px rgb(60, 60, 60),
+       inset 0 6px 6px rgba(0,0,0,.5),
+       inset 0 -6px 1px rgba(255,255,255,.2);
+  cursor: pointer;
+}
+
+.lableEx:before {
+  content: "OFF";
+  position: absolute;
+  right: 15px;
+  color: #000;
+}
+
+.lableEx:after {
+  content: "";
+  position: absolute;
+  left: 5px; top: 5px;
+  display: block;
+  width: 50px;
+  height: 30px;
+  border-radius: 50px;
+  background: #ccc linear-gradient(#fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+  transition: .5s;
+}
+.checkboxEx:checked ~ .lableEx:after {
+  left: 65px;
+}

@@ -40,7 +40,14 @@ local function saveIn(tab)
     return write_to_file(InputSet,"params.json")
 end
 
-
+local function OnOff(tab)
+    if(tab["elChecked"]) then
+        Outputs = bit.set(Outputs, tab["elValue"])
+    else
+        Outputs = bit.clear(Outputs, tab["elValue"]);
+    end
+    print(Outputs);
+end
 
 local function listap(t)
 local d = {}
@@ -62,6 +69,7 @@ print(tab.init);
  if tab.init=="save"then tab.init=nil r=save(tab)
  elseif tab.init=="saveOut" then tab.init=nil r=saveOut(tab)
  elseif tab.init=="saveIn" then tab.init=nil r=saveIn(tab)
+ elseif tab.init=="OnOff" then tab.init=nil r=OnOff(tab)
  elseif tab.init=="scan" then wifi.sta.getap(listap) r="true"
  elseif tab.init=="reboot" then
   tmr.create():alarm(2000, tmr.ALARM_SINGLE, function()print("reboot")node.restart()end)

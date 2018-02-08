@@ -16,6 +16,7 @@ pinOut=4;
 delay = 5000;
 Inputs = 0x0;
 InputsOn = 0x0;
+Outputs = 0;
 OnDelayValues  = {-1, -1, -1, -1, -1, -1, -1, -1};
 OffDelayValues = {-1, -1, -1, -1, -1, -1, -1, -1};
 Masks = dofile("LoadMasks.lua")()
