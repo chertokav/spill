@@ -32,11 +32,7 @@ print("valve"..valve)
                         end
                     end
             Outputs = bit.set(Outputs, valve - 1)
-            spi.setup(1, spi.MASTER, spi.CPOL_HIGH, spi.CPHA_LOW, 8, 20);
-            gpio.write(pinOut, gpio.LOW)
-            tmr.delay(20)
-            spi.send(1,Outputs)
-            gpio.write(pinOut, gpio.HIGH)
+            publ("outputs/"..valve, 1);
             --ждем
             tmr.alarm(2, offDelay, tmr.ALARM_SINGLE, 
                 function()
@@ -44,17 +40,15 @@ print("valve"..valve)
                     print("checkValve")
                     if inputNumOff and not bit.isset(Inputs, inputNumOff - 1) then
                         --TODO: тревога
+                        publ("system", "checkValve "..valve.." alarm clouse");
                         print("Alarm clouse")
                     else
+                        publ("system", "CheckValve "..valve.." pass");
                         print("checkValve")
                     end
                     --открыть кран
                     Outputs = bit.clear(Outputs, valve - 1)
-                    spi.setup(1, spi.MASTER, spi.CPOL_HIGH, spi.CPHA_LOW, 8, 20);
-                    gpio.write(pinOut, gpio.LOW)
-                    tmr.delay(20)
-                    spi.send(1,Outputs)
-                    gpio.write(pinOut, gpio.HIGH)
+                    publ("outputs/"..valve, 0);
                     --подождать закрытия
                     tmr.alarm(2, onDelay, tmr.ALARM_SINGLE, 
                         function()
@@ -63,8 +57,10 @@ print("valve"..valve)
                             if inputNumOn and bit.isset(Inputs, inputNumOn - 1) then
                                 --не успел открыться
                                 print("Alarm open")
+                                publ("system", "checkValve "..valve.." alarm open");
  --TODO: тревога                               
                             else
+                                publ("system", "CheckValve "..valve.." pass");
                                 print("checkValve")
                             end                            
                              --следующий кран

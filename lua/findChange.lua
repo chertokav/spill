@@ -1,71 +1,64 @@
-
-
-
 local function onChange(pin, state)
     pin = pin + 1;
     print(state, pin);
      
-    if InputSet["in"..pin].Tp == 1
+    if InputSet[pin][1] == 1
     then
     --датчик
         --print("datch");
-        if (InputSet["in"..pin].Pol == 1 and state)
+        if (InputSet[pin][5] == 1 and state)
             or
-           (InputSet["in"..pin].Pol == 2 and state == false)
+           (InputSet[pin][5] == 2 and state == false)
         then
             --print(OffDelayValues[pin]);
             OffDelayValues[pin] = -1;
-            if InputSet["in"..pin].On > 0
+            if InputSet[pin][2] > 0
             then
                 --отслеживаем включение
-                OnDelayValues[pin] = InputSet["in"..pin].On;
+                OnDelayValues[pin] = InputSet[pin][2];
                 --print("on ....");
             else
                 --включаем
                 --print("on");
                 InputsOn = bit.set(InputsOn, pin)
+                publ(myClient.."/inputs/"..pin, 1);
+                --отправка MQTT
                 dofile("CalcOut.lua");
             end
         else
             OnDelayValues[pin] = -1;
-            if not InputSet["in"..pin].Tr
+            if not InputSet[pin][4]
             then                
-                if InputSet["in"..pin].Of > 0
+                if InputSet[pin][3] > 0
                 then
                     --отслеживаем отключение
-                    OffDelayValues[pin] = InputSet["in"..pin].Of;
+                    OffDelayValues[pin] = InputSet[pin][3];
                     --print("off ....");
                 else
                     --выключаем
                      --print("off");
                     InputsOn = bit.clear(InputsOn, pin);
+                    publ(myClient.."/inputs/"..pin, 0);
                     dofile("CalcOut.lua");
                 end
             end
         end
     else
     --счетчик
-    --print(InputSet["in"..pin].Pol)
+    --print(InputSet["in"..pin][5])
     --print("state", state)
     
-        if (InputSet["in"..pin].Pol == 1 and state)
+        if (InputSet[pin][5] == 1 and state)
             or
-           (InputSet["in"..pin].Pol == 2 and state == false)
+           (InputSet[pin][5] == 2 and state == false)
         then
            --увеличим на единицу
-            --print("Stchet");
-            --print( InputSet["in"..pin].Val);
-            InputSet["in"..pin].V = InputSet["in"..pin].V + 1;
-            --print( InputSet["in"..pin].Val);
-            dofile("SaveInputSet.lua");
-           
+            InputSet[pin][6] = InputSet[pin][6] + 1;
+            publ(myClient.."/inputs/"..pin, InputSet[pin][6]);
+            dofile("SaveInputSet.lua");           
         end
     end 
 end
-
-
-
-
 
     spi.setup(1, spi.MASTER, spi.CPOL_HIGH, spi.CPHA_HIGH, 8, 20);
     gpio.write(pinIn, gpio.LOW)
