@@ -40,10 +40,10 @@ print("valve"..valve)
                     print("checkValve")
                     if inputNumOff and not bit.isset(Inputs, inputNumOff - 1) then
                         --TODO: тревога
-                        publ("system", "checkValve "..valve.." alarm clouse");
+                        publ("system/log", "checkValve "..valve.." alarm clouse");
                         print("Alarm clouse")
                     else
-                        publ("system", "CheckValve "..valve.." pass");
+                        publ("system/log", "CheckValve "..valve.." pass");
                         print("checkValve")
                     end
                     --открыть кран
@@ -57,10 +57,10 @@ print("valve"..valve)
                             if inputNumOn and bit.isset(Inputs, inputNumOn - 1) then
                                 --не успел открыться
                                 print("Alarm open")
-                                publ("system", "checkValve "..valve.." alarm open");
+                                publ("system/log", "checkValve "..valve.." alarm open");
  --TODO: тревога                               
                             else
-                                publ("system", "CheckValve "..valve.." pass");
+                                publ("system/log", "CheckValve "..valve.." pass");
                                 print("checkValve")
                             end                            
                              --следующий кран

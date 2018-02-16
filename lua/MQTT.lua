@@ -41,8 +41,8 @@ m:on("offline", function(client)
 m:on("message", 
     function(conn, topic, data)
         print("mes "..topic.." & "..data)
-        local d1 = string.match(topic,  "outputs.(%d+)")
-        local d2 = string.match(topic,  "inputs.(%d+)")
+        local d1 =string.match(topic,  "outputs.(%d+)")
+        local d2 =string.match(topic,  "inputs.(%d+)") 
         if d1 then
             if data == "1" then
                 print("bit.set Outputs")
@@ -59,6 +59,26 @@ m:on("message",
                 print("bit.set InputsOn")
                 InputsOn = bit.clear(InputsOn, d2)
             end        
+        elseif string.match(topic,  "system.(%w+)") == "cmd" then
+            if data == "MQTTreload" then
+                --перезагрузить весь MQTT
+                for i = 0, InputsCount, 1
+                do
+                    if bit.isset(Inputs, i) then                
+                        publ("inputs/"..i+1, 1);
+                    else
+                        publ("inputs/"..i+1, 0);
+                    end
+                end                
+                for i = 0, OutputsCount, 1
+                do
+                    if bit.isset(Outputs, i) then                
+                        publ("outputs/"..i+1, 1);
+                    else
+                        publ("outputs/"..i+1, 0);
+                    end
+                end
+            end    
         else
             print("No match MQTT")
         end

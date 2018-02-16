@@ -15,8 +15,10 @@ pinOut=4;
 
 delay = 5000;
 Inputs = 0x0;
+InputsCount = 8;
 InputsOn = 0x0;
 Outputs = 0;
+OutputsCount = 8;
 OutputsOld = 0;
 OnDelayValues  = {-1, -1, -1, -1, -1, -1, -1, -1};
 OffDelayValues = {-1, -1, -1, -1, -1, -1, -1, -1};

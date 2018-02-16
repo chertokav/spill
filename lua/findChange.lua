@@ -21,7 +21,7 @@ local function onChange(pin, state)
                 --включаем
                 --print("on");
                 InputsOn = bit.set(InputsOn, pin)
-                publ(myClient.."/inputs/"..pin, 1);
+                publ("inputs/"..pin, 1);
                 --отправка MQTT
                 dofile("CalcOut.lua");
             end
@@ -38,7 +38,7 @@ local function onChange(pin, state)
                     --выключаем
                      --print("off");
                     InputsOn = bit.clear(InputsOn, pin);
-                    publ(myClient.."/inputs/"..pin, 0);
+                    publ("inputs/"..pin, 0);
                     dofile("CalcOut.lua");
                 end
             end
@@ -54,7 +54,7 @@ local function onChange(pin, state)
         then
            --увеличим на единицу
             InputSet[pin][6] = InputSet[pin][6] + 1;
-            publ(myClient.."/inputs/"..pin, InputSet[pin][6]);
+            publ("inputs/"..pin, InputSet[pin][6]);
             dofile("SaveInputSet.lua");           
         end
     end 
@@ -69,7 +69,7 @@ end
     local states = 0x0 
     states = string.byte(spi.recv(1, 1))
     local changed = bit.bxor(states, Inputs);
-    for i = 0, 8, 1
+    for i = 0, InputsCount, 1
     do 
         if bit.band(changed, 1) == 1
             then                
