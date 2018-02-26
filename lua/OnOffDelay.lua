@@ -7,7 +7,7 @@
             OnDelayValues[key] = -1;
             InputsOn = bit.set(InputsOn, key - 1);
             --print(InputsOn);
-            dofile("CalcOut.lua");
+            --dofile("CalcOut.lua");
         else if value  ~= -1
             then
                 print("on...", key, value);
@@ -23,7 +23,7 @@
             --здесь пора включить
             OffDelayValues[key] = -1;
             InputsOn = bit.clear(InputsOn, key - 1);
-            dofile("CalcOut.lua");
+            --dofile("CalcOut.lua");
         else if value  ~= -1
             then
                 print("off...", key, value);

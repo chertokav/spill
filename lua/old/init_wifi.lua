@@ -24,6 +24,7 @@
             end)
         Broker = s.mqtt_server
         port = s.mqtt_port
+        print("s.token"..s.token)
         myClient = "196-59/gidro"
         m = mqtt.Client(myClient, 180)
     else
