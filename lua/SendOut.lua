@@ -1,5 +1,4 @@
-spi.setup(1, spi.MASTER, spi.CPOL_HIGH, spi.CPHA_LOW, 8, 20);
-    gpio.write(pinOut, gpio.LOW)
-    tmr.delay(20)
-    spi.send(1,Outputs)
-    gpio.write(pinOut, gpio.HIGH)
+print("send")
+write_reg(0x21, 0x01, bit.band(bit.bnot(Outputs), 255))
+write_reg(0x20, 0x01, Outputs)
+
