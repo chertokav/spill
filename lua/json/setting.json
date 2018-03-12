@@ -1,1 +1,1 @@
-{"auth_login":"admin","mqtt_login":"","wifi_id":"FermaChertok","mqtt_port":"1883","mqtt":"OFF","mqtt_pass":"","mqtt_server":"192.168.0.101","wifi_mode":"AP","mqtt_time":"","wifi_pass":"1qaz2wsx","token":"gidro","auth_pass":"0000","auth":"OFF"}
+{"auth_login":"admin","mqtt_login":"","wifi_id":"FermaChertok","mqtt_port":"1883","mqtt":"ON","mqtt_pass":"","mqtt_server":"192.168.0.101","wifi_mode":"AP","mqtt_time":"1","wifi_pass":"1qaz2wsx","token":"gidro","auth_pass":"0000","auth":"OFF"}

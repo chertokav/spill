@@ -8,10 +8,13 @@ local extmap={
   jpeg = "image/jpeg",
   jpg = "image/jpeg"
 }
-local function executeCode (s,p)
- for v in s:gmatch(p) do
+
+local patt = "<%?lua(.-)%?>";
+
+local function executeCode (s)
+ for v in s:gmatch(patt) do
   local _,c=pcall(loadstring(v))
-  s=s:gsub(p,tostring(c==nil and "" or c),1)
+  s = s:gsub(patt, tostring(c == nil and "" or c), 1)
  end return s
 end
 local function header(c,t,g)
@@ -24,13 +27,16 @@ return function(conn,filename,args,cookie)
  local line
  local gzip=filename:match(".gz")
  local ftype=filename:gsub(".gz",""):match("%.([%a%d]+)$")
+ --print("s.auth")
+ --print(s.auth)
  if s.auth=="ON"then
  if not cookie or cookie.id~=crypto.toBase64(crypto.mask(s.auth_login..s.auth_pass,s.token)) then
-  if ftype=="html"then filename="login.html"end
+  if ftype=="html"then filename="login.html"  print("login.html") end
  end
  end
  local fd=file.open(filename,"r")
  if fd then
+--print("200 OK")
   conn:send(header("200 OK",extmap[ftype or "txt"],gzip))
  else
   conn:send(header("404 Not Found","text/html"))
@@ -42,19 +48,23 @@ return function(conn,filename,args,cookie)
   repeat
    line=fd:readline()
     if line then
-     if line:find("<%?lua(.-)%?>")then
-      buf=buf..executeCode(line,"<%?lua(.-)%?>")
+     if line:find(patt)then
+      buf=buf..executeCode(line,patt)
      else
       buf=buf..line
      end
     end
-    if buf:len()>1024  or not line then
+    local heap = node.heap()
+    --print(heap)
+    --if(heap < 15000) then print("collectgarbage") collectgarbage() end
+    if buf:len() > 1024  or not line then
      conn:send(buf)
-     if line then coroutine.yield()end
+     if line then coroutine.yield() end
      buf=""
    end
   until not line
   fd:close() fd=nil arg=nil
+  --RUNtimer.start()
   elseif ftype=="lua"then
   local k, c = pcall(dofile(filename),args)
   conn:send(type(c)=="string"and c or"error")

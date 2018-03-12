@@ -66,7 +66,7 @@ local r="false"
 print("tab.init");
 print(tab.init);
 
- if tab.init=="save"then tab.init=nil r=save(tab)
+ if tab.init=="save" then tab.init = nil r = save(tab)
  elseif tab.init=="saveOut" then tab.init=nil r=saveOut(tab)
  elseif tab.init=="saveIn" then tab.init=nil r=saveIn(tab)
  elseif tab.init=="OnOff" then tab.init=nil r=OnOff(tab)

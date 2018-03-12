@@ -58,15 +58,28 @@ local function onChange(pin, InputSet)
             or
            (InputSet[pin][5] == 2 and state == false)
         then
+            print(InputSet[15][6])  
            --увеличим на единицу
             InputSet[pin][6] = InputSet[pin][6] + 1;
             publ("inputs/"..pin, InputSet[pin][6]);
-            dofile("SaveInputSet.lua");           
+            local ok, json = pcall(sjson.encode, InputSet)
+            if ok 
+            then
+              if file.open("params.inp", "w+") 
+              then  
+                   -- print("save")
+                   file.write(json)
+                   file.close()
+              end
+            else
+              print("failed to encode!")
+            end  
+            print(InputSet[15][6])         
         end
     end 
 end   
 
-local InputSet = dofile("LoadParams.lua")(); 
+ 
 --print("-------")
 for i = 1, 16 do
     --print(InputsValueOld[i].."v"..InputsValue[i])

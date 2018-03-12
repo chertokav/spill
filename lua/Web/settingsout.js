@@ -1,7 +1,6 @@
 window.onload =
     function () {
-        
-
+       
         function send(page, data, callback) {
             var req = new XMLHttpRequest();
             req.open("POST", page, true);
@@ -27,14 +26,13 @@ window.onload =
 
         function reboot() {
             send("web_control.lua", { init: "reboot" }, function (res) {
-                alert("The page will automatically reboot after 10 seconds");
+                alert("Страница автоматически перезагрузится через 10 секунд");
                 setTimeout(function () { location.href = "/"; }, 10000);
             });
         }
 
         /*поиск значения простого элемента*/
         function ebi(e) {
-            alert(document.getElementById(e).value);
             return document.getElementById(e).value
         }
 
@@ -43,14 +41,9 @@ window.onload =
             location.href = '/login.html';
         }
         function r() {
-            alert("Сохраняемс");
             var t = { init: "saveOut"};
             var mask = [ebi("Output1"), ebi("Output2"), ebi("Output3"), ebi("Output4"), ebi("Output5"), ebi("Output6"), ebi("Output7"), ebi("Output8")];
-            alert("Сохраняем1");
             t["mask"] = mask;
-            alert("Сохраняем2");
-            /*[ebi("Output1"), ebi("Output2"), ebi("Output3"), ebi("Output4"), ebi("Output5"), ebi("Output6"), ebi("Output7"), ebi("Output8")];*/
-            alert("Скрываем окно");
             e.style.opacity = "0", setTimeout(
                 function () {
                     e.style.display = "none"
@@ -79,8 +72,7 @@ window.onload =
         var elName;
         for (ind = 1; ind <= 8; ind++) {
             elName = "Tr" + ind;
-            var s = document.getElementById(elName)/*, d = s.querySelectorAll('input[type="checkbox"]:not([value]), input[type="checkbox"][value=""]');
-            for (var i = 0; i < d.length; i++) d[i].disabled = true;*/
+            var s = document.getElementById(elName)
             s.onchange = function () {
                 for (ind2 = 1; ind2 <= 8; ind2++) {
                     var elName2 = "Tr" + ind2;
@@ -88,17 +80,8 @@ window.onload =
                     for (var j = 0; j < n.length; j++)
                         n[j].checked ? itog += parseFloat(n[j].value) : itog;
                     document.getElementById("Output" + ind2).innerHTML = itog;
-                    alert("itog " + itog);
                 }
             }
         }
-
-        
-
-        
-
-        
-
-        
 
     };

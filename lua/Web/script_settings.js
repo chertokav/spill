@@ -93,13 +93,7 @@ if (check_sel("mqtt") == "OFF") {
 
 		send("web_control.lua", data, function (res) {
 			if (res = "true") {
-				send("web_control.lua", {
-					init: "reboot"
-				}, function (res) {
-					setTimeout(function () {
-						location.href = "/";
-					}, 10000);
-				});
+				alert("Сохранение выполнено.");
 			}
 		})
 	}

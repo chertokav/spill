@@ -1,18 +1,14 @@
     --сложим маски
-    local Masks = dofile("LoadMasks.lua")()
+    
     OutputsOld = Outputs;
     Outputs = 0;
-    --print(#Masks)
     for i = 1, #Masks do
-    --print("Masks[i]"..Masks[i])
-        if bit.isset(InputsOn, i - 1)
-        then
-            --print("Outputs"..Outputs)
-            Outputs = bit.bor(Outputs, Masks[i]);
-            --print("Outputs2"..Outputs)
-            --print(Outputs);
-            --найти изменения            
-        end
+            -- берем одну маску и смотрим, есть в ней активные выходы по AND
+            if bit.band(Masks[i], InputsOn) > 0 then
+                Outputs = bit.set(Outputs, i-1);
+            else
+            end
+            
     end 
     --установим ручные биты
     for i = 0, 7 do

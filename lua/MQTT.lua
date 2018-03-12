@@ -1,6 +1,7 @@
-MQTTtimer = tmr.create()
 MQTTconnected = false;
-MQTTtimer:register(30000, tmr.ALARM_SEMI , function()
+if s.mqtt=="ON" then
+    MQTTtimer = tmr.create()
+    MQTTtimer:register(30000, tmr.ALARM_SEMI , function()
                             m:connect(Broker, port, 0, 
                             function(client)
                                 print("MQTT connected")
@@ -15,17 +16,8 @@ MQTTtimer:register(30000, tmr.ALARM_SEMI , function()
                             end)
                             MQTTtimer:stop()
                         end)
-MQTTtimer:start()
+    MQTTtimer:start()
 
-function publ(topic, datt)
-    print("mes "..topic.." & "..datt)
-    if(datt and MQTTconnected) then
-        m:publish(myClient.."/"..topic, datt, 0, 0)
-    else
-        print("MQTT publish error")
-    end
-    
-end
                 
 --подписка на сообщения
 m:on("connect", 
@@ -118,6 +110,15 @@ m:on("message",
             print("No match MQTT")
         end
     end)
+    
+end
 
-
-
+function publ(topic, datt)
+    print("mes "..topic.." & "..datt)
+    if(datt and MQTTconnected) then
+        m:publish(myClient.."/"..topic, datt, 0, 0)
+    else
+        print("MQTT publish error")
+    end
+    
+end

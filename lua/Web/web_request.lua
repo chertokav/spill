@@ -39,6 +39,7 @@ local function parseUri(uri)
  r.args=parse(uri:match("%?([^=]+=[^;]*)"),"([^&]+)") or {}
  return r
 end
+
 return function (request)
    local e=request:find("\r\n",1,true)
    if not e then return nil end
