@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 local id  = 0
 local sda = 5
 local scl = 6
@@ -57,3 +58,9 @@ if Outputs3Adress > 0 then
     write_reg(Outputs3Adress, 0x03, SignalOutputs)
     write_reg(Outputs3Adress, 0x02, NewOutputs)
 end
+=======
+print("send")
+write_reg(0x21, 0x01, bit.band(bit.bnot(Outputs), 255))
+write_reg(0x20, 0x01, Outputs)
+
+>>>>>>> 4e4011cd0c0796307e57a388257007b51910d6e8

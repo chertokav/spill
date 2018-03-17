@@ -37,7 +37,12 @@ end
             print("off", key, value);
             --здесь пора включить
             OffDelayValues[key] = -1;
+<<<<<<< HEAD
             PinClear(key)
+=======
+            InputsOn = bit.clear(InputsOn, key - 1);
+            --dofile("CalcOut.lua");
+>>>>>>> 4e4011cd0c0796307e57a388257007b51910d6e8
         else if value  ~= -1
             then
                 print("off...", key, value);

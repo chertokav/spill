@@ -1,3 +1,4 @@
+<<<<<<< HEAD
   local function settings(level, pulse2)
     print("Settings mode")
     dofile("setup.lua")
@@ -13,6 +14,8 @@
     print("cli2")
   end
 
+=======
+>>>>>>> 4e4011cd0c0796307e57a388257007b51910d6e8
 print("10 seconds wait")
 tmr.alarm(0, 10000, tmr.ALARM_SINGLE, 
     function()

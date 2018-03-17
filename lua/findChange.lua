@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 local function getPinIsSet(pin)
     if pin > 32 then
         return bit.isset(InputsOnHigh, pin-1)
@@ -36,14 +37,24 @@ local function onChange(pin, InputSet)
         print("pin not config "..pin)
         return 
     end
+=======
+local function onChange(pin, InputSet)
+>>>>>>> 4e4011cd0c0796307e57a388257007b51910d6e8
     --pin = pin + 1;
     local state;
     --print(InputsValue[pin].."-"..InputSet[pin][11].."-"..bit.isset(InputsOn, pin-1))
     --если значение больше или меньше граничных значений
+<<<<<<< HEAD
     if InputsValue[pin] < InputSet[pin][11] and getPinIsSet(pin) then
     --сброс на ноль
         state = false
     elseif InputsValue[pin] > InputSet[pin][12] and getPinIsClear(pin) then
+=======
+    if InputsValue[pin] < InputSet[pin][11] and bit.isset(InputsOn, pin-1) then
+    --сброс на ноль
+        state = false
+    elseif InputsValue[pin] > InputSet[pin][12] and bit.isclear(InputsOn, pin-1) then
+>>>>>>> 4e4011cd0c0796307e57a388257007b51910d6e8
     --установка единицы
         state = true
     else
@@ -68,7 +79,11 @@ local function onChange(pin, InputSet)
                 OnDelayValues[pin] = InputSet[pin][2];
             else
                 --включаем
+<<<<<<< HEAD
                 PinSet(pin)
+=======
+                InputsOn = bit.set(InputsOn, pin-1)
+>>>>>>> 4e4011cd0c0796307e57a388257007b51910d6e8
                 publ("inputs/"..pin, 1);
             end
         else
@@ -83,7 +98,11 @@ local function onChange(pin, InputSet)
                     OffDelayValues[pin] = InputSet[pin][3];
                 else
                     --выключаем
+<<<<<<< HEAD
                     PinClear(pin);
+=======
+                    InputsOn = bit.clear(InputsOn, pin-1);
+>>>>>>> 4e4011cd0c0796307e57a388257007b51910d6e8
                     publ("inputs/"..pin, 0);
                 end
             end
@@ -113,12 +132,21 @@ local function onChange(pin, InputSet)
             end
             print(InputSet[15][6])
         end
+<<<<<<< HEAD
     end
 end
 
 local InputSet = dofile("LoadParams.lua")();  
 --print("-------")
 for i = 1, #InputsValueOld do
+=======
+    end 
+end   
+
+local InputSet = dofile("LoadParams.lua")(); 
+--print("-------")
+for i = 1, 16 do
+>>>>>>> 4e4011cd0c0796307e57a388257007b51910d6e8
     --print(InputsValueOld[i].."v"..InputsValue[i])
     if InputsValueOld[i] ~= InputsValue[i] then
         onChange(i, InputSet)
